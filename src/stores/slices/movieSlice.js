@@ -1,5 +1,5 @@
 const KEY = "e81b248b";
-const BASE_URL = `http://www.omdbapi.com/?apikey=${KEY}`;
+const BASE_URL = `https://www.omdbapi.com/?apikey=${KEY}`;
 
 export const createMovieSlice = (set, get) => ({
   query: "",
