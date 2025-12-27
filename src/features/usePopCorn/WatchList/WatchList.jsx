@@ -10,6 +10,7 @@ function WatchList() {
   const [isOpen, setIsOpen] = useState(true);
   const { activeMovieData, clearActiveMovieData, isLoading } = useBoundStore();
   const [userRating, setUserRating] = useState(0);
+  const starSize = window.innerWidth < 769 ? 10 : 25;
 
   const isWatched = watchedMovies?.find(
     (item) => item?.imdbID === activeMovieData?.imdbID
@@ -19,7 +20,7 @@ function WatchList() {
   )?.userRating;
 
   const countRef = useRef(0);
-  const inputEl = useRef(null);
+  // const inputEl = useRef(null);
 
   const {
     Title,
@@ -30,6 +31,7 @@ function WatchList() {
     Plot,
     Actors,
     Director,
+    Poster,
   } = activeMovieData || {};
   // console.log(activeMovieData);
 
@@ -104,7 +106,7 @@ function WatchList() {
             <button className="btn-back" onClick={handleBack}>
               &larr;
             </button>
-            <img alt="movie image" />
+            <img alt="movie image" src={Poster} />
             <div className="details-overview">
               <h2>{Title}</h2>
               <p>
@@ -123,7 +125,7 @@ function WatchList() {
                 <>
                   <StarRating
                     maxRating={10}
-                    size={20}
+                    size={starSize}
                     onSetRating={setUserRating}
                   />
                   {userRating > 0 && (

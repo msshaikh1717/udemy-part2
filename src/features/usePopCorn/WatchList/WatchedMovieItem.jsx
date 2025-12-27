@@ -2,13 +2,13 @@ import { useBoundStore } from "../../../stores/useBoundStore";
 
 function WatchedMovieItem({ movie }) {
   // console.log(movie);
-  const { Title, imdbRating, userRating, Runtime, imdbID } = movie;
+  const { Title, imdbRating, userRating, Runtime, imdbID, Poster } = movie;
   const { removeFromWatch } = useBoundStore();
 
   return (
     <div className="list">
       <li>
-        <img alt="poster" />
+        <img alt="poster" src={Poster} />
         <h3>{Title}</h3>
         <div>
           <p>⭐ {Number(imdbRating).toFixed(1)}</p>

@@ -20,7 +20,7 @@ export const createMovieSlice = (set, get) => ({
         signal,
       });
 
-      //To debug error state
+      //To debug error state with slow api
       // const res = await fetch(`https://httpbin.org/delay/5`);
 
       const data = await res.json();
@@ -47,12 +47,11 @@ export const createMovieSlice = (set, get) => ({
             );
       }
     } catch (error) {
-      // console.log(error);
       if (error.name !== "AbortError")
         set(
           {
             isLoading: { search: false },
-            error: `failed tp fetch movies: ${error.message}`,
+            error: `failed to fetch movies list: ${error.message}`,
           },
           false,
           "fetchMovie/failure"

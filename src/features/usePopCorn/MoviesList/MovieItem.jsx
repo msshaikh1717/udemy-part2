@@ -1,11 +1,11 @@
 import { useBoundStore } from "../../../stores/useBoundStore";
 
 function MovieItem({ movie }) {
+  console.log(movie);
   const { activeMovieData, fetchMovieById, clearActiveMovieData } =
     useBoundStore();
 
   function handleMovieClicked(mov) {
-    // console.log(mov);
     activeMovieData && mov.imdbID === activeMovieData.imdbID
       ? clearActiveMovieData()
       : fetchMovieById(mov.imdbID);
@@ -17,9 +17,9 @@ function MovieItem({ movie }) {
       onClick={() => handleMovieClicked(movie)}
     >
       <li>
-        <img alt="poster" />
+        <img alt="poster" src={movie.Poster} />
         <h3>{movie.Title}</h3>
-        <p>📅 {2010}</p>
+        <p>📅 {movie.Year}</p>
       </li>
     </div>
   );
