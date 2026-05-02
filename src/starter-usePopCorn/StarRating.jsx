@@ -42,7 +42,7 @@ export default function StarRating({
     lineHeight: "1",
     margin: "0",
     color,
-    fontSize: `${size / 1.5}px`,
+    fontSize: `calc(var(--star-size, ${size}px) / 1.5)`,
   };
 
   return (
@@ -71,8 +71,8 @@ export default function StarRating({
 
 function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
   const starStyle = {
-    width: `${size}px`,
-    height: `${size}px`,
+    width: `var(--star-size, ${size}px)`,
+    height: `var(--star-size, ${size}px)`,
     display: "block",
     cursor: "pointer",
   };

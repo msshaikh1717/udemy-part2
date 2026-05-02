@@ -10,7 +10,6 @@ function WatchList() {
   const [isOpen, setIsOpen] = useState(true);
   const { activeMovieData, clearActiveMovieData, isLoading } = useBoundStore();
   const [userRating, setUserRating] = useState(0);
-  const starSize = window.innerWidth < 769 ? 10 : 25;
 
   const isWatched = watchedMovies?.find(
     (item) => item?.imdbID === activeMovieData?.imdbID
@@ -125,7 +124,6 @@ function WatchList() {
                 <>
                   <StarRating
                     maxRating={10}
-                    size={starSize}
                     onSetRating={setUserRating}
                   />
                   {userRating > 0 && (
