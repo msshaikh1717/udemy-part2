@@ -13,7 +13,7 @@ function MovieItem({ movie }) {
 
   return (
     <div
-      style={{ cursor: "pointer" }}
+      style={{ cursor: "pointer", color: "#fff" }}
       onClick={() => handleMovieClicked(movie)}
     >
       <li>

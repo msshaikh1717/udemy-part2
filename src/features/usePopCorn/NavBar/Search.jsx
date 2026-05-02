@@ -31,7 +31,7 @@ function Search() {
     return () => document.removeEventListener("keydown", callback);
   }, [setQuery]);
 */
-  // Its preffered to use eventListener than useEffect
+  // Its preferred to use eventListener than useEffect
   /*
   useEffect(() => {
     const controller = new AbortController();
