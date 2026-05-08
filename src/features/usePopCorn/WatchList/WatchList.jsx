@@ -12,10 +12,10 @@ function WatchList() {
   const [userRating, setUserRating] = useState(0);
 
   const isWatched = watchedMovies?.find(
-    (item) => item?.imdbID === activeMovieData?.imdbID
+    (item) => item?.imdbID === activeMovieData?.imdbID,
   );
   const isWatchedUserRating = watchedMovies?.find(
-    (item) => item?.imdbID === activeMovieData?.imdbID
+    (item) => item?.imdbID === activeMovieData?.imdbID,
   )?.userRating;
 
   const countRef = useRef(0);
@@ -83,7 +83,7 @@ function WatchList() {
         setUserRating(0);
       }
     };
-    
+
     document.addEventListener("keydown", callback);
     return () => {
       document.removeEventListener("keydown", callback);
@@ -95,7 +95,7 @@ function WatchList() {
       <button className="btn-toggle" onClick={() => setIsOpen((open) => !open)}>
         {isOpen ? "-" : "+"}
       </button>
-
+      {/* TODO: Add Error handling for details fetch and display error message in UI */}
       {/* Movie Clicked Details */}
       {isLoading?.details ? (
         <p className="loader">Details Loading...</p>
@@ -122,10 +122,7 @@ function WatchList() {
             <div className="rating">
               {!isWatched ? (
                 <>
-                  <StarRating
-                    maxRating={10}
-                    onSetRating={setUserRating}
-                  />
+                  <StarRating maxRating={10} onSetRating={setUserRating} />
                   {userRating > 0 && (
                     <button className="btn-add" onClick={handleAddMovie}>
                       + Add to list
