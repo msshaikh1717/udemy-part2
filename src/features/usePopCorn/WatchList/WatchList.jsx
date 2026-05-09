@@ -151,7 +151,10 @@ function WatchList() {
               ))}
             </ul>
           ) : (
-            <p>No movies added to the list yet, Try adding some by searching</p>
+            <p className="empty-message">
+              <span>🍿</span> No movies added to the list yet. Try adding some
+              by searching!
+            </p>
           )}
         </>
       ) : (
