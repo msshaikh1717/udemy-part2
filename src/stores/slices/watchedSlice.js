@@ -1,7 +1,17 @@
 export const createWatchedMovieSlice = (set) => ({
-  watchedMovies: JSON.parse(localStorage.getItem("watched"))
-    ? JSON.parse(localStorage.getItem("watched"))
-    : [],
+  watchedMovies: (() => {
+    try {
+      const raw = localStorage.getItem("watched");
+      return raw !== null ? JSON.parse(raw) : [];
+    } catch (error) {
+      console.warn(
+        "Corrupt watched data in local storage, resetting...: 3",
+        error,
+      );
+      localStorage.removeItem("watched");
+      return [];
+    }
+  })(),
 
   addtoWatch: (newMovie) => {
     set(
@@ -16,7 +26,7 @@ export const createWatchedMovieSlice = (set) => ({
         };
       },
       false,
-      "addToWatch"
+      "addToWatch",
     );
   },
   removeFromWatch: (id) => {
@@ -24,7 +34,9 @@ export const createWatchedMovieSlice = (set) => ({
       (state) => {
         localStorage.setItem(
           "watched",
-          JSON.stringify(state.watchedMovies.filter((mov) => mov.imdbID !== id))
+          JSON.stringify(
+            state.watchedMovies.filter((mov) => mov.imdbID !== id),
+          ),
         );
 
         return {
@@ -33,7 +45,7 @@ export const createWatchedMovieSlice = (set) => ({
         };
       },
       false,
-      "removeFromWatch"
+      "removeFromWatch",
     );
   },
 });

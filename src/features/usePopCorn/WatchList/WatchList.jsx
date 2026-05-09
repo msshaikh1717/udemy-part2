@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import WatchedSummary from "./WatchedSummary";
-import StarRating from "../../../starter-usePopCorn/StarRating";
-import WatchedMovieItem from "./WatchedMovieItem";
-import { useBoundStore } from "../../../stores/useBoundStore";
 import { useKey } from "../../../hooks/useKey";
+import StarRating from "../../../starter-usePopCorn/StarRating";
+import { useBoundStore } from "../../../stores/useBoundStore";
+import WatchedMovieItem from "./WatchedMovieItem";
+import WatchedSummary from "./WatchedSummary";
 
 function WatchList() {
   const { watchedMovies, addtoWatch } = useBoundStore();
@@ -144,11 +144,15 @@ function WatchList() {
         //  Watched Movies List
         <>
           <WatchedSummary />
-          <ul>
-            {watchedMovies?.map((movie) => (
-              <WatchedMovieItem movie={movie} key={movie.imdbID} />
-            ))}
-          </ul>
+          {watchedMovies?.length > 0 ? (
+            <ul>
+              {watchedMovies?.map((movie) => (
+                <WatchedMovieItem movie={movie} key={movie.imdbID} />
+              ))}
+            </ul>
+          ) : (
+            <p>No movies added to the list yet, Try adding some by searching</p>
+          )}
         </>
       ) : (
         ""
