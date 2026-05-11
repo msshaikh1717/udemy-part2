@@ -1,11 +1,13 @@
 import { useEffect, useRef } from "react";
-import { useBoundStore } from "../../../stores/useBoundStore";
 import { useKey } from "../../../hooks/useKey";
+import { useBoundStore } from "../../../stores/useBoundStore";
 
 function Search() {
   const { query, setQuery, fetchMovie, resetFetchMovie } = useBoundStore();
 
-  const controller = new AbortController();
+  //controller must persist across renders without triggering re-renders
+  const controllerRef = useRef(null);
+
   const inputEl = useRef(null);
 
   //Enter key focus
@@ -16,33 +18,16 @@ function Search() {
     setQuery("");
   });
 
-  /*
   useEffect(() => {
-    function callback(e) {
-      if (document.activeElement === inputEl.current) return;
+    if (query?.length > 3) {
+      controllerRef.current?.abort(); // cancel previous request
+      controllerRef.current = new AbortController(); // fresh controller
+      fetchMovie(query, controllerRef.current.signal);
+    } else resetFetchMovie();
 
-      if (e.code === "Enter") {
-        inputEl.current.focus();
-        setQuery("");
-      }
-    }
-    document.addEventListener("keydown", callback);
+    return () => controllerRef.current?.abort(); // clearnup on unmount
+  }, [fetchMovie, query, resetFetchMovie]);
 
-    return () => document.removeEventListener("keydown", callback);
-  }, [setQuery]);
-*/
-  // Its preferred to use eventListener than useEffect
-  /*
-  useEffect(() => {
-    const controller = new AbortController();
-
-    query?.length > 3
-      ? fetchMovie(query, controller.signal)
-      : resetFetchMovie();
-
-    return () => controller.abort();
-  }, [query, fetchMovie, resetFetchMovie]);
-*/
   return (
     <input
       className="search"
@@ -50,12 +35,7 @@ function Search() {
       placeholder="search by movie name"
       value={query}
       ref={inputEl}
-      onChange={(e) => {
-        setQuery(e.target.value);
-        e.target.value?.length > 3
-          ? fetchMovie(e.target.value, controller.signal)
-          : resetFetchMovie();
-      }}
+      onChange={(e) => setQuery(e.target.value)}
     />
   );
 }
